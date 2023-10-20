@@ -16,50 +16,44 @@ services:
     networks:
       - skull_king
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+  redis:
+    image: redis:6.0.5
     restart: unless-stopped
     ports:
-      - 8080:80
-    depends_on:
-      - db
-    environment:
-      PMA_HOST: db
-      PMA_USER: mermaid
-      PMA_PASSWORD: beats_the_skull_king
+      - 6379:6379
     networks:
       - skull_king
 
-  api:
-    build:
-      context: ../SkullKing-API
-      dockerfile: ../SkullKing-Docker/api/Dockerfile
-    restart: unless-stopped
-    command: npm run start:dev
-    depends_on:
-      - db
-    ports:
-      - 3000:3000
-    volumes:
-      - ../SkullKing-API:/usr/src/app
-      - /usr/src/app/node_modules/
-      # - /usr/src/app/dist/
-    networks:
-      - skull_king
+  # api:
+  #   build:
+  #     context: ../SkullKing-API
+  #     dockerfile: ../SkullKing-Docker/api/Dockerfile
+  #   restart: unless-stopped
+  #   command: npm run start:dev
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ../SkullKing-API:/usr/src/app
+  #     - /usr/src/app/node_modules/
+  #     # - /usr/src/app/dist/
+  #   networks:
+  #     - skull_king
 
-  react:
-    build:
-      context: ../SkullKing
-      dockerfile: ../SkullKing-Docker/react/Dockerfile
-    restart: unless-stopped
-    command: yarn start
-    ports:
-      - 80:3000
-    volumes:
-      - ../SkullKing:/usr/src/app
-      - /usr/src/app/node_modules/
-    networks:
-      - skull_king
+  # react:
+  #   build:
+  #     context: ../SkullKing
+  #     dockerfile: ../SkullKing-Docker/react/Dockerfile
+  #   restart: unless-stopped
+  #   command: yarn start
+  #   ports:
+  #     - 80:3000
+  #   volumes:
+  #     - ../SkullKing:/usr/src/app
+  #     - /usr/src/app/node_modules/
+  #   networks:
+  #     - skull_king
 
 networks:
   skull_king:

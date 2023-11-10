@@ -2,17 +2,16 @@ version: "3.3"
 
 services:
   db:
-    image: mariadb:10.4
+    image: postgres:12.3
     restart: unless-stopped
     volumes:
-      - ./data:/var/lib/mysql
+      - ./data:/var/lib/postgresql/data
     ports:
-      - 3306:3306
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: skull_king
-      MYSQL_USER: mermaid
-      MYSQL_PASSWORD: beats_the_skull_king
+      POSTGRES_USER: mermaid
+      POSTGRES_PASSWORD: beats_the_skull_king
+      POSTGRES_DB: skull_king
     networks:
       - skull_king
 
@@ -21,6 +20,8 @@ services:
     restart: unless-stopped
     ports:
       - 6379:6379
+    environment:
+      REDIS_PASSWORD: beats_the_skull_king
     networks:
       - skull_king
 
